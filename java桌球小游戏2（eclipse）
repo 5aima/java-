@@ -1,0 +1,55 @@
+package Letter_Game;
+
+import java.awt.*;
+import javax.swing.*;
+
+public class BallGame02 extends JFrame{
+	//画图
+	Image desk=Toolkit.getDefaultToolkit().getImage("images/球桌.jpg");
+	Image ball=Toolkit.getDefaultToolkit().getImage("images/台球.png");
+	
+	double x=100;//小球的横坐标
+	double y=100;//小球的纵坐标
+	double degree=3.14/3;//弧度为60度
+	
+	//画窗口的方法
+	public void paint(Graphics g) {
+		g.drawImage(desk, 0, 0, null);
+		g.drawImage(ball,(int)x,(int)y,null);
+		//斜移动
+		x=x+10*Math.cos(degree);
+		y=y+10*Math.sin(degree);
+		//碰到上下边界
+		if(y>500-40-25||y<60) {
+			degree=-degree;
+		}
+		//碰到左右边界
+		if(x<40||x>865-40-25){
+			degree=3.14-degree;
+		}
+		
+	}
+	
+	
+	//窗口加载
+	void launchFrame() {
+		setBounds(50,50,856,500);
+		setVisible(true);
+		
+		//重画窗口,每秒画25次
+		while(true) {
+			repaint();//会调用上面的paint方法
+			try {
+				Thread.sleep(40);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+public static void main(String arg[]) {
+	BallGame02 game1=new BallGame02();
+	game1.launchFrame();
+}
+}
